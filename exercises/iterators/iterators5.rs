@@ -11,7 +11,6 @@
 // Execute `rustlings hint iterators5` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
 use std::collections::HashMap;
 
@@ -35,7 +34,8 @@ fn count_for(map: &HashMap<String, Progress>, value: Progress) -> usize {
 fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
     // map is a hashmap with String keys and Progress values.
     // map = { "variables1": Complete, "from_str": None, ... }
-    todo!();
+    // map.iter().filter(|&(_, &p)| {p==value}).count()  // 我的答案
+    map.values().filter(|&val| *val == value).count()
 }
 
 fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
@@ -54,7 +54,9 @@ fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Pr
     // collection is a slice of hashmaps.
     // collection = [{ "variables1": Complete, "from_str": None, ... },
     //     { "variables2": Complete, ... }, ... ]
-    todo!();
+    // collection.iter().fold(0, |b, x| {x.iter().filter(|&(_, &p)| {p==value}).count() + b})  // 我的答案，但是没有用之前写好的函数
+    // collection.iter().fold(0, |b, x| {count_iterator(x, value) + b})  // 加上之前写好的函数，主要用了fold方法
+    collection.iter().map(|map| count_iterator(map, value)).sum()  // 没有使用fold方法。
 }
 
 #[cfg(test)]
